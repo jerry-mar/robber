@@ -29,7 +29,7 @@ public abstract class WxComsController extends Activity implements IWXAPIEventHa
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 if (RETURN_MSG_TYPE_LOGIN == baseResp.getType()) {
-                    onLoginFailure();
+                    onLoginFailure(baseResp.errStr);
                     return;
                 }
                 if (RETURN_MSG_TYPE_SHARE == baseResp.getType()) {
@@ -48,7 +48,7 @@ public abstract class WxComsController extends Activity implements IWXAPIEventHa
         }
     }
 
-    public void onLoginFailure() {}
+    public void onLoginFailure(String msg) {}
     public void onLoginSuccess(String code) {}
     public void onShareFailure() {}
     public void onShareSuccess() {}

@@ -14,4 +14,5 @@ android {
 dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
+    implementation files('libs/open_sdk_r5886_lite.jar')
 }

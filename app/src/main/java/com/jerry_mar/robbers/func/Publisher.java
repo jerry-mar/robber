@@ -13,15 +13,21 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 public class Publisher {
-    public void share(Intent intent) {
+    public String share(Intent intent) {
+        String result = null;
         int provider = intent.getExtra(Intent.PROVIDER, Robber.PROVIDER_WECHAT);
         switch (provider) {
             case Robber.PROVIDER_WECHAT : {
                 IWXAPI wxapi = Robber.initCore(intent.getContext(), intent.getAppid());
-                share(intent, wxapi);
+                if (wxapi.isWXAppInstalled()) {
+                    share(intent, wxapi);
+                } else {
+                    result = "您还未安装微信客户端!";
+                }
             }
             break;
         }
+        return result;
     }
 
     private void share(Intent intent, IWXAPI wxapi) {
