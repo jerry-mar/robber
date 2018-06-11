@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import com.jerry_mar.robbers.func.Authenticator;
+import com.jerry_mar.robbers.func.Paier;
 import com.jerry_mar.robbers.func.Publisher;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -13,9 +14,11 @@ import com.tencent.tauth.Tencent;
 public class Robber {
     public static final int PROVIDER_WECHAT = 1;
     public static final int PROVIDER_QQCHAT = 2;
+    public static final int PROVIDER_ALI = 2;
 
     public static final int FUNC_SHARE = 1;
     public static final int FUNC_LOGIN = 2;
+    public static final int FUNC_PAY = 3;
 
     public static final int WECHAT_SHARE_TALK = SendMessageToWX.Req.WXSceneSession;
     public static final int WECHAT_SHARE_FRIEND = SendMessageToWX.Req.WXSceneTimeline;
@@ -27,6 +30,7 @@ public class Robber {
     private static SparseArray<Object> coreAPI = new SparseArray<>();
     private static Publisher publisher;
     private static Authenticator authenticator;
+    private static Paier paier;
 
     public static String forward(Intent intent) {
         String result = null;
@@ -44,6 +48,13 @@ public class Robber {
                     authenticator = new Authenticator();
                 }
                 result = authenticator.login(intent);
+            }
+            break;
+            case FUNC_PAY: {
+                if (paier == null) {
+                    paier = new Paier();
+                }
+                result = paier.pay(intent);
             }
             break;
         }
